@@ -25,6 +25,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     [Header("Jumping")]
     public float jumpForce;
+    public float dashJumpForce;
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump;
@@ -67,7 +68,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
         crouching,
         sliding,
         air,
-        dashing
+        dashing,
+        dashExtend
     }
 
     public bool sliding;
@@ -110,13 +112,22 @@ public class PlayerMovementAdvanced : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if(Input.GetKey(jumpKey) && readyToJump && grounded && !dashing)
         {
             readyToJump = false;
 
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        if(Input.GetKey(jumpKey) && readyToJump && grounded && dashing)
+        {
+            readyToJump = false;
+
+            DashJump();
+
+            Invoke(nameof(ResetDashJump), jumpCooldown);
         }
 
         // start crouch
@@ -317,7 +328,23 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
+
+    private void DashJump()
+    {
+        exitingSlope = true;
+
+        // reset y velocity
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        rb.AddForce(transform.up * dashJumpForce, ForceMode.Impulse);
+    }
     private void ResetJump()
+    {
+        readyToJump = true;
+
+        exitingSlope = false;
+    }
+    private void ResetDashJump()
     {
         readyToJump = true;
 
