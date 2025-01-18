@@ -30,6 +30,8 @@ public class Dashing : MonoBehaviour
     public float dashCd;
     private float dashCdTimer;
 
+    public bool canDash = true;
+
     [Header("Input")]
     public KeyCode dashKey = KeyCode.E;
 
@@ -41,6 +43,9 @@ public class Dashing : MonoBehaviour
 
     private void Update()
     {
+        if (pm.grounded == true)
+            CanDash();
+
         if (Input.GetKeyDown(dashKey))
             Dash();
 
@@ -51,6 +56,7 @@ public class Dashing : MonoBehaviour
     private void Dash()
     {
         if (dashCdTimer > 0) return;
+        if (canDash == false) return;
         else dashCdTimer = dashCd;
 
         pm.dashing = true;
@@ -76,6 +82,12 @@ public class Dashing : MonoBehaviour
         Invoke(nameof(DelayedDashForce), 0.025f);
 
         Invoke(nameof(ResetDash), dashDuration);
+
+        if(pm.grounded == false)
+        {
+            CantDash();
+        }
+
     }
 
     private Vector3 delayedForceToApply;
@@ -114,5 +126,15 @@ public class Dashing : MonoBehaviour
             direction = forwardT.forward;
 
         return direction.normalized;
+    }
+
+    public void CanDash()
+    {
+        canDash = true;
+    }
+
+    public void CantDash()
+    {
+        canDash = false;
     }
 }

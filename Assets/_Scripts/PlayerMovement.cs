@@ -34,11 +34,14 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+    //GameObject dash = GameObject.Find("Dashing");
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        //dash.GetComponent<Dashing>();
 
         readyToJump = true;
     }
@@ -53,7 +56,10 @@ public class PlayerMovement : MonoBehaviour
 
         // handle drag
         if (grounded)
+        {
             rb.drag = groundDrag;
+            //dash.canDash = true;
+        }
         else
             rb.drag = 0;
     }

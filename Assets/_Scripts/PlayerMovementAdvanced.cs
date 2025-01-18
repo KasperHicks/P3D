@@ -43,7 +43,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    public bool grounded;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
@@ -59,6 +59,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+
+    //public Dashing dash;
 
     public MovementState state;
     public enum MovementState
@@ -80,6 +82,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
+        //dash = GetComponent<Dashing>();
+
         readyToJump = true;
 
         startYScale = transform.localScale.y;
@@ -99,6 +103,11 @@ public class PlayerMovementAdvanced : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+        //if (grounded)
+        //{
+            //dash.CanDash();
+        //}
     }
 
     private void FixedUpdate()
