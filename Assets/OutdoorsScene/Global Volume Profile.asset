@@ -88,7 +88,7 @@ MonoBehaviour:
     m_Value: 100
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 400
+    m_Value: 100
   enableVolumetricFog:
     m_OverrideState: 1
     m_Value: 1
@@ -282,10 +282,10 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.6
+    m_Value: 0.4
   intensity:
     m_OverrideState: 1
-    m_Value: 0.538
+    m_Value: 0.655
   scatter:
     m_OverrideState: 1
     m_Value: 0.203
